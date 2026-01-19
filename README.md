@@ -1,36 +1,20 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Breadcrumbs Notes
 
-## Getting Started
+Breadcrumbs Notes is a lightweight note-taking system designed to capture small insights, thoughts, and observations — the “breadcrumbs” that usually disappear throughout the day.
 
-First, run the development server:
+Instead of optimizing for volume or perfection, this project focuses on:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Awareness over accumulation
+- Agency over automation
+- Reflection over reaction
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This repository will evolve into a tool and philosophy for intentional thinking, personal experimentation, and reclaiming attention.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Status
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+🚧 Early exploration — ideas and structure in progress.
 
-## Learn More
+## Why “Breadcrumbs”?
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Because clarity is rarely a sudden breakthrough.  
+It’s built by following small traces of thought over time.
