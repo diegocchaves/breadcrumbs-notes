@@ -37,6 +37,7 @@ export default function NewNotePage() {
           <option>Encounter</option>
           <option>Mood</option>
           <option>Energy</option>
+          <option>Thoughts</option>
           <option>Other</option>
         </select>
         <button type="submit" className="bg-blue-500 text-white p-2 rounded-md">
