@@ -14,16 +14,17 @@ export async function GET() {
 
 // POST — create note
 export async function POST(req: Request) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user.id) {
+    return NextResponse.json("Unauthorized", { status: 401 });
+  }
   const body = await req.json();
-  const testUser = await prisma.user.upsert({
-    where: { email: "dev@test.com" },
-    update: {},
-    create: { email: "dev@test.com", name: "Dev User" },
-  });
-
+  if (!body.text || !body.fieldType) {
+    return NextResponse.json("Bad Request", { status: 400 });
+  }
   const note = await prisma.fieldNote.create({
     data: {
-      userId: testUser.id,
+      userId: session.user.id,
       text: body.text,
       fieldType: body.fieldType,
       mood: body.mood ?? null,
