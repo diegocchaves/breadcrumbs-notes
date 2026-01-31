@@ -1,28 +1,59 @@
 "use client";
 
-import useSWR from "swr";
-import { NoteCard } from "@/components/NoteCard";
-import { QuickAddButton } from "@/components/QuickAddButton";
+import { useEffect, useState } from "react";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+type Note = {
+  id: string;
+  text: string;
+  fieldType: string;
+  createdAt: string;
+};
 
-export function NotesClient() {
-  const { data: notes } = useSWR("/api/notes", fetcher);
+export default function NotesClient() {
+  const [notes, setNotes] = useState<Note[]>([]);
+  const [text, setText] = useState("");
+
+  useEffect(() => {
+    fetch("/api/notes")
+      .then((r) => r.json())
+      .then(setNotes);
+  }, []);
+
+  async function addNote() {
+    const res = await fetch("/api/notes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        text,
+        fieldType: "Insight",
+      }),
+    });
+
+    const note = await res.json();
+    setNotes((prev) => [note, ...prev]);
+    setText("");
+  }
 
   return (
-    <>
-      <div>
-        {notes?.map((note: any) => (
-          <NoteCard
-            key={note.id}
-            text={note.text}
-            fieldType={note.fieldType}
-            timestamp={note.timestamp}
-          />
-        ))}
-      </div>
+    <div>
+      <textarea
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        className="border p-2 w-full mb-2"
+      />
 
-      <QuickAddButton />
-    </>
+      <button onClick={addNote} className="bg-black text-white px-4 py-2 mb-4">
+        Add Note
+      </button>
+
+      {notes.length === 0 && <p>No notes yet</p>}
+
+      {notes.map((n) => (
+        <div key={n.id} className="border p-2 mb-2">
+          <strong>{n.fieldType}</strong>
+          <p>{n.text}</p>
+        </div>
+      ))}
+    </div>
   );
 }

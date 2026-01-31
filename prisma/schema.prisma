@@ -8,22 +8,16 @@ generator client {
 }
 
 model User {
-  id         String   @id @default(cuid())
-  name       String?
-  email      String   @unique
-  password   String?
-  createdAt  DateTime @default(now())
-  notes      FieldNote[]
+  id    String      @id @default(cuid())
+  email String      @unique
+  notes FieldNote[]
 }
 
 model FieldNote {
-  id          String   @id @default(cuid())
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  text        String
-  fieldType   String
-  mood        String?
-  energy      String?
-  attachments String?
-  timestamp   DateTime @default(now())
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  text      String
+  fieldType String
+  createdAt DateTime @default(now())
 }

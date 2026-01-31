@@ -1,38 +1,27 @@
-import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { NextResponse } from "next/server";
 
-// GET — fetch notes for user
+const TEST_USER_ID = "cml2ixomi0000948qaax6s6d0"; // Replace with actual user ID in production
+
 export async function GET() {
   const notes = await prisma.fieldNote.findMany({
-    orderBy: { timestamp: "desc" },
+    where: { userId: TEST_USER_ID },
+    orderBy: { createdAt: "desc" },
   });
 
   return NextResponse.json(notes);
 }
 
-// POST — create note
 export async function POST(req: Request) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user.id) {
-    return NextResponse.json("Unauthorized", { status: 401 });
-  }
   const body = await req.json();
-  if (!body.text || !body.fieldType) {
-    return NextResponse.json("Bad Request", { status: 400 });
-  }
+
   const note = await prisma.fieldNote.create({
     data: {
-      userId: session.user.id,
+      userId: "TEST_USER_ID",
       text: body.text,
       fieldType: body.fieldType,
-      mood: body.mood ?? null,
-      energy: body.energy ?? null,
     },
   });
 
   return NextResponse.json(note, { status: 201 });
 }
-
-//session.user.id
