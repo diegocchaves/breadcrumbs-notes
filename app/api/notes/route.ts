@@ -1,27 +1,41 @@
-import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 
-const TEST_USER_ID = "cml2ixomi0000948qaax6s6d0"; // Replace with actual user ID in production
-
+/* GET /api/notes */
 export async function GET() {
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const notes = await prisma.fieldNote.findMany({
-    where: { userId: TEST_USER_ID },
+    where: { userId: session.user.id },
     orderBy: { createdAt: "desc" },
   });
 
   return NextResponse.json(notes);
 }
 
+/* POST /api/notes */
 export async function POST(req: Request) {
-  const body = await req.json();
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const { text, fieldType } = await req.json();
 
   const note = await prisma.fieldNote.create({
     data: {
-      userId: "TEST_USER_ID",
-      text: body.text,
-      fieldType: body.fieldType,
+      text,
+      fieldType,
+      userId: session.user.id, // 🔑 linked to session user
     },
   });
 
-  return NextResponse.json(note, { status: 201 });
+  return NextResponse.json(note);
 }
