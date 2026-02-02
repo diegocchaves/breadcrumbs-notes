@@ -2,20 +2,42 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function NewNotePage() {
+  const { data: session } = useSession();
   const [text, setText] = useState("");
   const [fieldType, setFieldType] = useState("Insight");
   const router = useRouter();
 
+  if (!session) {
+    return (
+      <div className="h-screen flex flex-col justify-center items-center">
+        <main className="p-4 max-w-xl mx-auto flex flex-col items-center">
+          <p>Please log in to create a new note.</p>
+        </main>
+      </div>
+    );
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await fetch("/api/notes", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, fieldType }),
-    });
-    router.push("/");
+    try {
+      const response = await fetch("/api/notes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, fieldType }),
+      });
+
+      if (response.ok) {
+        router.push("/");
+        router.refresh();
+      } else {
+        console.error("Failed to create note");
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
   };
 
   return (

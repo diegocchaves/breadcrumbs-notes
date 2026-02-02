@@ -11,12 +11,18 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const notes = await prisma.fieldNote.findMany({
-    where: { userId: session.user.id },
-    orderBy: { createdAt: "desc" },
-  });
+  try {
+    const notes = await prisma.fieldNote.findMany({
+      where: { userId: session.user.id }, // 🔑 filter by session user
+    });
 
-  return NextResponse.json(notes);
+    return NextResponse.json(notes);
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to fetch notes" },
+      { status: 500 },
+    );
+  }
 }
 
 /* POST /api/notes */
@@ -26,16 +32,29 @@ export async function POST(req: Request) {
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+  try {
+    const { text, fieldType } = await req.json();
 
-  const { text, fieldType } = await req.json();
+    if (!text || !fieldType) {
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 },
+      );
+    }
 
-  const note = await prisma.fieldNote.create({
-    data: {
-      text,
-      fieldType,
-      userId: session.user.id, // 🔑 linked to session user
-    },
-  });
+    const newNote = await prisma.fieldNote.create({
+      data: {
+        text,
+        fieldType,
+        userId: session.user.id, // 🔑 associate note with session user
+      },
+    });
 
-  return NextResponse.json(note);
+    return NextResponse.json(newNote, { status: 201 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to create note" },
+      { status: 500 },
+    );
+  }
 }

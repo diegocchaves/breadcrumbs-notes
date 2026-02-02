@@ -30,7 +30,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="p-8 max-w-sm mx-auto space-y-4">
+    <div className="p-8 max-w-sm mx-auto space-y-4 ">
       <input
         type="email"
         placeholder="Email"
