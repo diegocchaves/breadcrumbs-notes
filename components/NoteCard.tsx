@@ -1,22 +1,17 @@
-import React from "react";
-
-interface NoteCardProps {
+export interface NoteCardProps {
   text: string;
   fieldType: string;
-  timestamp: string;
+  createdAt: string;
 }
-
-export const NoteCard: React.FC<NoteCardProps> = ({
-  text,
-  fieldType,
-  timestamp,
-}) => {
+export function NoteCard({ text, fieldType, createdAt }: NoteCardProps) {
   return (
-    <div className="bg-white dark:bg-gray-800 p-4 rounded-md shadow mb-2">
-      <p className="text-sm text-gray-500">
-        {fieldType} • {new Date(timestamp).toLocaleString()}
-      </p>
-      <p className="mt-1 text-gray-900 dark:text-gray-100">{text}</p>
+    <div className="p-4 border rounded-md shadow-sm bg-white">
+      <p className="mb-2 text-gray-800">{text}</p>
+      <div className="text-xs text-gray-500">
+        <span>Type: {fieldType}</span>
+        <br />
+        <span>Created at: {new Date(createdAt).toLocaleString()}</span>
+      </div>
     </div>
   );
-};
+}

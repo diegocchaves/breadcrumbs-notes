@@ -1,59 +1,49 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
+import { QuickAddButton } from "@/components/QuickAddButton";
+import { NoteCard } from "@/components/NoteCard";
+import useSWR from "swr";
 
-type Note = {
-  id: string;
-  text: string;
-  fieldType: string;
-  createdAt: string;
+const fetcher = async (url: string) => {
+  const res = await fetch(url);
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.error || "Failed to fetch notes");
+  }
+
+  return res.json();
 };
 
 export default function NotesClient() {
-  const [notes, setNotes] = useState<Note[]>([]);
-  const [text, setText] = useState("");
+  const { data: notes, error, isLoading } = useSWR("/api/notes", fetcher);
 
-  useEffect(() => {
-    fetch("/api/notes")
-      .then((r) => r.json())
-      .then(setNotes);
-  }, []);
+  if (isLoading) {
+    return <p>Loading notes...</p>;
+  }
+  if (error) {
+    return <p>Could not load notes: {error.message}</p>;
+  }
 
-  async function addNote() {
-    const res = await fetch("/api/notes", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        text,
-        fieldType: "Insight",
-      }),
-    });
-
-    const note = await res.json();
-    setNotes((prev) => [note, ...prev]);
-    setText("");
+  if (!notes || notes.length === 0) {
+    <div className="flex flex-col gap-4">
+      <p className="text-sm text-gray-500">No notes available.</p>
+      <QuickAddButton />
+    </div>;
   }
 
   return (
-    <div>
-      <textarea
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        className="border p-2 w-full mb-2"
-      />
-
-      <button onClick={addNote} className="bg-black text-white px-4 py-2 mb-4">
-        Add Note
-      </button>
-
-      {notes.length === 0 && <p>No notes yet</p>}
-
-      {notes.map((n) => (
-        <div key={n.id} className="border p-2 mb-2">
-          <strong>{n.fieldType}</strong>
-          <p>{n.text}</p>
-        </div>
+    <div className="flex flex-col gap-4">
+      {notes.map((note: any) => (
+        <NoteCard
+          key={note.id}
+          text={note.text}
+          fieldType={note.fieldType}
+          createdAt={note.createdAt}
+        />
       ))}
+      <QuickAddButton />
     </div>
   );
 }
