@@ -35,6 +35,11 @@ export default function NewNotePage() {
 
     if (!res.ok) {
       setError(data.error || "Something went wrong");
+
+      setTimeout(() => {
+        setError(null);
+      }, 3000);
+
       return;
     }
 
@@ -55,7 +60,7 @@ export default function NewNotePage() {
             if (error) setError(null);
           }}
         />
-        {error && <p className="text-sm text-red-500">{error}</p>}
+        {error && <p className="text-sm text-red-500 ">{error}</p>}
         <select
           value={fieldType}
           onChange={(e) => setFieldType(e.target.value)}
