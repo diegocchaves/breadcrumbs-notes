@@ -9,6 +9,7 @@ export default function NewNotePage() {
   const [text, setText] = useState("");
   const [fieldType, setFieldType] = useState("Insight");
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
 
   if (!session) {
     return (
@@ -22,22 +23,23 @@ export default function NewNotePage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const response = await fetch("/api/notes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, fieldType }),
-      });
+    setError(null);
 
-      if (response.ok) {
-        router.push("/");
-        router.refresh();
-      } else {
-        console.error("Failed to create note");
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
+    const res = await fetch("/api/notes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text, fieldType }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setError(data.error || "Something went wrong");
+      return;
     }
+
+    router.push("/");
+    router.refresh();
   };
 
   return (
@@ -48,8 +50,12 @@ export default function NewNotePage() {
           className="border p-2 rounded-md"
           placeholder="Write your observation..."
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={(e) => {
+            setText(e.target.value);
+            if (error) setError(null);
+          }}
         />
+        {error && <p className="text-sm text-red-500">{error}</p>}
         <select
           value={fieldType}
           onChange={(e) => setFieldType(e.target.value)}
