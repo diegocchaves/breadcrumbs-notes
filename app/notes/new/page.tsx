@@ -43,8 +43,7 @@ export default function NewNotePage() {
       return;
     }
 
-    router.push("/");
-    router.refresh();
+    router.push("/?created=1");
   };
 
   return (

@@ -43,6 +43,7 @@ export default function NotesClient() {
           createdAt={note.createdAt}
         />
       ))}
+
       <QuickAddButton />
     </div>
   );
