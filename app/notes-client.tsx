@@ -1,6 +1,5 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
 import { QuickAddButton } from "@/components/QuickAddButton";
 import { NoteCard } from "@/components/NoteCard";
 import useSWR from "swr";
@@ -34,7 +33,7 @@ export default function NotesClient() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 w-full justify-center items-center">
       {notes.map((note: any) => (
         <NoteCard
           key={note.id}

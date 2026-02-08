@@ -5,9 +5,9 @@ export interface NoteCardProps {
 }
 export function NoteCard({ text, fieldType, createdAt }: NoteCardProps) {
   return (
-    <div className="p-4 border rounded-md shadow-sm bg-white">
-      <p className="mb-2 text-gray-800">{text}</p>
-      <div className="text-xs text-gray-500">
+    <div className="p-4 rounded-md shadow-sm bg-slate-800 w-1/2">
+      <p className="mb-2 text-gray-50">{text}</p>
+      <div className="text-xs text-gray-50">
         <span>Type: {fieldType}</span>
         <br />
         <span>Created at: {new Date(createdAt).toLocaleString()}</span>
