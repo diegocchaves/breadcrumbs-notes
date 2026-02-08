@@ -3,13 +3,14 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useToast } from "@/app/providers/toast-provider";
 
 export default function NewNotePage() {
   const { data: session } = useSession();
   const [text, setText] = useState("");
   const [fieldType, setFieldType] = useState("Insight");
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
+  const { showToast } = useToast();
 
   if (!session) {
     return (
@@ -23,7 +24,6 @@ export default function NewNotePage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
 
     const res = await fetch("/api/notes", {
       method: "POST",
@@ -34,14 +34,11 @@ export default function NewNotePage() {
     const data = await res.json();
 
     if (!res.ok) {
-      setError(data.error || "Something went wrong");
-
-      setTimeout(() => {
-        setError(null);
-      }, 3000);
-
+      showToast(data.error || "Something went wrong", "error");
       return;
     }
+
+    showToast("Note added successfully", "success");
 
     router.push("/?created=1");
   };
@@ -56,10 +53,8 @@ export default function NewNotePage() {
           value={text}
           onChange={(e) => {
             setText(e.target.value);
-            if (error) setError(null);
           }}
         />
-        {error && <p className="text-sm text-red-500 ">{error}</p>}
         <select
           value={fieldType}
           onChange={(e) => setFieldType(e.target.value)}

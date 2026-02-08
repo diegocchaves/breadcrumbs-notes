@@ -1,4 +1,8 @@
 "use client";
+import {
+  IoIosCloseCircleOutline,
+  IoIosCheckmarkCircleOutline,
+} from "react-icons/io";
 
 import { createContext, useContext, useState, ReactNode } from "react";
 
@@ -26,7 +30,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 
     setTimeout(() => {
       setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, 3000);
+    }, 2500);
   };
 
   return (
@@ -34,20 +38,29 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       {children}
 
       {/* Toast UI */}
-      <div className="fixed top-4 right-4 z-50 flex flex-col gap-2">
+      <div className="fixed top-20 right-4 z-50 flex flex-col gap-2">
         {toasts.map((toast) => (
           <div
             key={toast.id}
             className={`rounded-md px-4 py-2 text-sm shadow-md transition
               ${
                 toast.type === "success"
-                  ? "bg-green-500 text-white"
+                  ? "bg-green-200 text-green-700 border border-green-700 flex items-center gap-2"
                   : toast.type === "error"
-                    ? "bg-red-500 text-white"
-                    : "bg-gray-800 text-white"
+                    ? "bg-red-200 text-red-700 border border-red-700 flex items-center gap-2"
+                    : "bg-gray-200 text-gray-800 border border-gray-800 flex items-center gap-2"
               }`}
           >
-            {toast.message}
+            {toast.type === "success" && (
+              <IoIosCheckmarkCircleOutline
+                size={20}
+                className="text-green-700"
+              />
+            )}
+            {toast.type === "error" && (
+              <IoIosCloseCircleOutline size={20} className="text-red-700 " />
+            )}
+            <span> {toast.message}</span>
           </div>
         ))}
       </div>
