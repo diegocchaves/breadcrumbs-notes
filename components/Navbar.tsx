@@ -18,7 +18,7 @@ export default function Navbar() {
         {status === "unauthenticated" && (
           <>
             <Link href="/login">Login</Link>
-            <Link href="/register">Register</Link>
+            <Link href="/signup">Register</Link>
           </>
         )}
 
