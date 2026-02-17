@@ -17,7 +17,6 @@ export function NoteCard({ id, text, fieldType, createdAt }: NoteCardProps) {
   const buttonRef = useRef<HTMLDivElement>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(text);
-  const router = useRouter();
   const { showToast } = useToast();
 
   const toggleMenu = () => {
@@ -49,7 +48,7 @@ export function NoteCard({ id, text, fieldType, createdAt }: NoteCardProps) {
     };
   }, [isOpen]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleNoteUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const res = await fetch(`/api/notes/${id}`, {
@@ -71,13 +70,32 @@ export function NoteCard({ id, text, fieldType, createdAt }: NoteCardProps) {
     setIsEditing(false);
   };
 
+  const handleDelete = async () => {
+    const res = await fetch(`/api/notes/${id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: id }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      showToast(data.error || "Something went wrong", "error");
+      return;
+    }
+
+    showToast("Deleted successfully", "success");
+
+    mutate("/api/notes");
+  };
+
   return (
     <div className="p-4 flex flex-row justify-between rounded-md shadow-sm bg-slate-800 w-1/2">
       <div className="flex flex-col gap-2">
         {!isEditing ? (
           <p>{text}</p>
         ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+          <form onSubmit={handleNoteUpdate} className="flex flex-col gap-2">
             <textarea
               className="border p-2 rounded-md bg-slate-700 text-white"
               value={editedText}
@@ -130,7 +148,11 @@ export function NoteCard({ id, text, fieldType, createdAt }: NoteCardProps) {
             >
               Edit
             </button>
-            <button className="block w-full text-left px-4 py-2 text-gray-100 hover:text-blue-400 text-sm">
+            <button
+              type="button"
+              onClick={handleDelete}
+              className="block w-full text-left px-4 py-2 text-gray-100 hover:text-blue-400 text-sm"
+            >
               Delete
             </button>
           </div>

@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-//* UPDATE THE NOTES*/
+//* UPDATE NOTE*/
 export async function PATCH(
   req: Request,
   context: { params: Promise<{ id: string }> },
@@ -45,6 +45,46 @@ export async function PATCH(
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to update note" },
+      { status: 500 },
+    );
+  }
+}
+
+//* DELETE NOTE*/
+export async function DELETE(
+  req: Request,
+  context: { params: Promise<{ id: string }> },
+) {
+  const params = await context.params;
+
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  try {
+    const { id } = await req.json();
+
+    if (!id || typeof id !== "string") {
+      return NextResponse.json({ error: "Invalid note ID" }, { status: 400 });
+    }
+
+    const note = await prisma.fieldNote.findUnique({
+      where: { id: params.id },
+    });
+
+    if (!note || note.userId !== session.user.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    }
+
+    const DeleteNote = await prisma.fieldNote.delete({
+      where: { id: params.id },
+    });
+
+    return NextResponse.json(DeleteNote, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to delete note" },
       { status: 500 },
     );
   }
