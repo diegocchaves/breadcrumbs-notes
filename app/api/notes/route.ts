@@ -13,7 +13,10 @@ export async function GET() {
 
   try {
     const notes = await prisma.fieldNote.findMany({
-      where: { userId: session.user.id }, // 🔑 filter by session user
+      where: { userId: session.user.id },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     return NextResponse.json(notes);

@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-//* PATCH /api/notes/:id */
+//* UPDATE THE NOTES*/
 export async function PATCH(
   req: Request,
   context: { params: Promise<{ id: string }> },
