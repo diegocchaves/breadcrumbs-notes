@@ -37,6 +37,7 @@ export default function NotesClient() {
       {notes.map((note: any) => (
         <NoteCard
           key={note.id}
+          id={note.id}
           text={note.text}
           fieldType={note.fieldType}
           createdAt={note.createdAt}
