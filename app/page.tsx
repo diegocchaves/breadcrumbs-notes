@@ -6,9 +6,7 @@ export default function Home() {
   return (
     <main className="p-6">
       <h1 className="text-xl font-bold mb-4">Timeline</h1>
-      <div className="flex flex-col gap-4 w-full justify-center items-center">
-        <NotesClient />
-      </div>
+      <NotesClient />
     </main>
   );
 }

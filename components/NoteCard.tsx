@@ -90,21 +90,24 @@ export function NoteCard({ id, text, fieldType, createdAt }: NoteCardProps) {
   };
 
   return (
-    <div className="p-4 flex flex-row justify-between rounded-md shadow-sm bg-slate-800 w-1/2">
-      <div className="flex flex-col gap-2">
+    <div className="p-4 flex flex-row justify-between rounded-md shadow-sm bg-slate-800 w-full h-fit lg:w-1/2 gap-3">
+      <div className="flex flex-col gap-2 overflow-hidden p-2">
         {!isEditing ? (
-          <p>{text}</p>
+          <p className="text-[16px]">{text}</p>
         ) : (
-          <form onSubmit={handleNoteUpdate} className="flex flex-col gap-2">
+          <form
+            onSubmit={handleNoteUpdate}
+            className="flex flex-col gap-2 w-full"
+          >
             <textarea
-              className="border p-2 rounded-md bg-slate-700 text-white"
+              className="border p-2 rounded-md bg-slate-700 text-gray-50 "
               value={editedText}
               onChange={(e) => setEditedText(e.target.value)}
             />
             <div>
               <button
                 type="submit"
-                className="bg-green-500 text-white px-3 py-1 rounded-md mr-2 text-sm"
+                className="bg-green-500 text-gray-50 px-3 py-1 rounded-md mr-2 text-sm"
               >
                 Save
               </button>
@@ -113,27 +116,29 @@ export function NoteCard({ id, text, fieldType, createdAt }: NoteCardProps) {
                   setIsEditing(false);
                   setEditedText(text);
                 }}
-                className="bg-gray-500 text-white px-3 py-1 rounded-md text-sm"
+                className="bg-gray-500 text-gray-50 px-3 py-1 rounded-md text-sm"
               >
                 Cancel
               </button>
             </div>
           </form>
         )}
-        <div className="text-xs text-gray-50">
+        <div className="flex flex-col text-xs text-gray-400 gap-1">
           <span>Type: {fieldType}</span>
-          <br />
           <span>Created at: {new Date(createdAt).toLocaleString()}</span>
         </div>
       </div>
       <div
-        className="relative cursor-pointer"
+        className="relative cursor-pointer rounded-md "
         ref={buttonRef}
         onClick={toggleMenu}
       >
         {/* edit/delete buttons can go here */}
         {!isOpen ? (
-          <HiOutlineDotsHorizontal size={20} />
+          <HiOutlineDotsHorizontal
+            className="text-slate-300 hover:text-slate-500"
+            size={20}
+          />
         ) : (
           <HiOutlineDotsHorizontal size={10} />
         )}
