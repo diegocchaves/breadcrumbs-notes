@@ -9,7 +9,11 @@ export default function Navbar() {
   return (
     <nav className="flex items-center justify-between px-6 py-4 border-b">
       <Link href="/" className="font-semibold">
-        <img src="/bc-logo.svg" width="35" height="35" alt="Breadcrumbs logo" />
+        <img
+          src="/bc-logo.svg"
+          className="h-6 w-6 lg:h-12 lg:w-12"
+          alt="Breadcrumbs logo"
+        />
       </Link>
 
       <div className="flex items-center gap-4">
