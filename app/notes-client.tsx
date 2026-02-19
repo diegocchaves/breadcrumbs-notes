@@ -27,8 +27,10 @@ export default function NotesClient() {
 
   if (!notes || notes.length === 0) {
     return (
-      <div className="flex flex-col gap-4 w-full justify-center items-center text-sm text-gray-500">
-        <p>No notes found. Start by adding a new note!</p>
+      <div className="flex flex-col gap-4 w-full h-100 justify-center items-center text-sm text-gray-500 p-6">
+        <p className="flex justify-center items-center translate-y-1/2">
+          No notes found. Start by adding a new note!
+        </p>
         <QuickAddButton />
       </div>
     );
