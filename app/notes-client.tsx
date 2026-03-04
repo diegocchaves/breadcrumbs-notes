@@ -37,7 +37,7 @@ export default function NotesClient() {
   }
 
   return (
-    <div className="flex flex-col gap-4 w-full justify-center items-center">
+    <div className="flex flex-col gap-4 w-full justify-center items-center mt-10">
       {notes.map((note: any) => (
         <NoteCard
           key={note.id}

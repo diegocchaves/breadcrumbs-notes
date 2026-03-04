@@ -7,7 +7,7 @@ export default function Navbar() {
   const { data: session, status } = useSession();
 
   return (
-    <nav className="flex items-center justify-between px-6 py-4 border-b">
+    <nav className="flex items-center justify-between px-6 py-5 bg-gray-900 fixed w-full">
       <Link href="/" className="font-semibold">
         <img
           src="/bc-logo.svg"
