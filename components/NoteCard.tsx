@@ -1,5 +1,5 @@
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
-import { useState, useEffect, useRef, use } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useToast } from "@/app/providers/toast-provider";
 import { useRouter } from "next/navigation";
 import { mutate } from "swr";
@@ -18,6 +18,7 @@ export function NoteCard({ id, text, fieldType, createdAt }: NoteCardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(text);
   const { showToast } = useToast();
+  const [expanded, setExpanded] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -90,17 +91,17 @@ export function NoteCard({ id, text, fieldType, createdAt }: NoteCardProps) {
   };
 
   return (
-    <div className="p-4 flex flex-row justify-between rounded-md shadow-sm bg-slate-800 w-full h-fit lg:w-1/2 gap-3">
-      <div className="flex flex-col gap-2 overflow-hidden p-2">
+    <div className="p-4 flex flex-row justify-between rounded-md shadow-sm bg-slate-800 w-full h-fit lg:w-1/2 gap-3 overflow-hidden">
+      <div className="flex flex-col gap-2 p-2 min-w-0 flex-1 ">
         {!isEditing ? (
-          <p className="text-[16px]">{text}</p>
+          <p>{text}</p>
         ) : (
           <form
             onSubmit={handleNoteUpdate}
             className="flex flex-col gap-2 w-full"
           >
             <textarea
-              className="border p-2 rounded-md bg-slate-700 text-gray-50 "
+              className="border p-2 rounded-md bg-slate-700 text-gray-50"
               value={editedText}
               onChange={(e) => setEditedText(e.target.value)}
             />
