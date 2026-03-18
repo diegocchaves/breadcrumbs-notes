@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useToast } from "@/app/providers/toast-provider";
 import { useRouter } from "next/navigation";
 import { mutate } from "swr";
+import { Economica } from "next/font/google";
 
 export interface NoteCardProps {
   id: string;
@@ -91,24 +92,33 @@ export function NoteCard({ id, text, fieldType, createdAt }: NoteCardProps) {
   };
 
   return (
-    <div className="p-4 flex flex-row justify-between rounded-md shadow-sm bg-slate-800 w-full h-fit lg:w-1/2 gap-3 overflow-hidden">
-      <div className="flex flex-col gap-2 p-2 min-w-0 flex-1 ">
+    <div className="flex flex-row justify-between w-full gap-3 p-4 rounded-md shadow-sm bg-slate-800 lg:w-1/2 ">
+      <div className="flex flex-col flex-1 min-w-0 gap-2 p-2 overflow-hidden">
         {!isEditing ? (
-          <p>{text}</p>
+          <div
+            className={`overflow-hidden transition-[max-height] duration-300 text-gray-50 cursor-pointer`}
+            style={{
+              maxHeight: expanded ? "1000px" : "4.5rem", // 3 lines ≈ 1.5em each
+              whiteSpace: "pre-wrap",
+            }}
+            onClick={() => setExpanded(!expanded)}
+          >
+            <span>{text}</span>
+          </div>
         ) : (
           <form
             onSubmit={handleNoteUpdate}
-            className="flex flex-col gap-2 w-full"
+            className="flex flex-col w-full gap-2"
           >
             <textarea
-              className="border p-2 rounded-md bg-slate-700 text-gray-50"
+              className="p-2 border rounded-md bg-slate-700 text-gray-50"
               value={editedText}
               onChange={(e) => setEditedText(e.target.value)}
             />
             <div>
               <button
                 type="submit"
-                className="bg-green-500 text-gray-50 px-3 py-1 rounded-md mr-2 text-sm"
+                className="px-3 py-1 mr-2 text-sm bg-green-500 rounded-md text-gray-50"
               >
                 Save
               </button>
@@ -117,20 +127,20 @@ export function NoteCard({ id, text, fieldType, createdAt }: NoteCardProps) {
                   setIsEditing(false);
                   setEditedText(text);
                 }}
-                className="bg-gray-500 text-gray-50 px-3 py-1 rounded-md text-sm"
+                className="px-3 py-1 text-sm bg-gray-500 rounded-md text-gray-50"
               >
                 Cancel
               </button>
             </div>
           </form>
         )}
-        <div className="flex flex-col text-xs text-gray-400 gap-1">
+        <div className="flex flex-col text-[10px] text-gray-400 gap-1">
           <span>Type: {fieldType}</span>
           <span>Created at: {new Date(createdAt).toLocaleString()}</span>
         </div>
       </div>
       <div
-        className="relative cursor-pointer rounded-md "
+        className="relative rounded-md cursor-pointer "
         ref={buttonRef}
         onClick={toggleMenu}
       >
@@ -146,18 +156,18 @@ export function NoteCard({ id, text, fieldType, createdAt }: NoteCardProps) {
         {isOpen && (
           <div
             ref={menuRef}
-            className="absolute right-0 bg-slate-700 rounded-md shadow-lg z-10"
+            className="absolute right-0 z-10 rounded-md shadow-lg bg-slate-700"
           >
             <button
               onClick={() => setIsEditing(true)}
-              className="block w-full text-left px-4 py-2 text-gray-100 hover:text-blue-400 text-sm"
+              className="block w-full px-4 py-2 text-sm text-left text-gray-100 hover:text-blue-400"
             >
               Edit
             </button>
             <button
               type="button"
               onClick={handleDelete}
-              className="block w-full text-left px-4 py-2 text-gray-100 hover:text-blue-400 text-sm"
+              className="block w-full px-4 py-2 text-sm text-left text-gray-100 hover:text-blue-400"
             >
               Delete
             </button>
