@@ -14,8 +14,8 @@ export default function NewNotePage() {
 
   if (!session) {
     return (
-      <div className="h-screen flex flex-col justify-center items-center">
-        <main className="p-4 max-w-xl mx-auto flex flex-col items-center">
+      <div className="flex flex-col items-center justify-center h-screen">
+        <main className="flex flex-col items-center max-w-xl p-4 mx-auto">
           <p>Please log in to create a new note.</p>
         </main>
       </div>
@@ -44,11 +44,14 @@ export default function NewNotePage() {
   };
 
   return (
-    <main className="p-4 max-w-xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">New Note</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+    <main className="max-w-xl p-4 mx-auto">
+      <h1 className="mb-4 text-2xl font-bold">New Note</h1>
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-4 p-20 mt-40 bg-gray-900 rounded"
+      >
         <textarea
-          className="border p-2 rounded-md"
+          className="p-2 border rounded-md"
           placeholder="Write your observation..."
           value={text}
           onChange={(e) => {
@@ -58,7 +61,7 @@ export default function NewNotePage() {
         <select
           value={fieldType}
           onChange={(e) => setFieldType(e.target.value)}
-          className="border p-2 rounded-md"
+          className="p-2 border rounded-md"
         >
           <option>Insight</option>
           <option>Encounter</option>
@@ -67,7 +70,7 @@ export default function NewNotePage() {
           <option>Thoughts</option>
           <option>Other</option>
         </select>
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded-md">
+        <button type="submit" className="p-2 text-white bg-blue-500 rounded-md">
           Save Note
         </button>
       </form>
