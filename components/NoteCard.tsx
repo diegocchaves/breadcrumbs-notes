@@ -114,7 +114,7 @@ export function NoteCard({ id, text, fieldType, createdAt }: NoteCardProps) {
             className="flex flex-col w-full gap-2"
           >
             <textarea
-              className="p-2 border rounded-md bg-slate-700 text-gray-50"
+              className="h-40 p-2 border rounded-md bg-slate-700 text-gray-50"
               value={editedText}
               onChange={(e) => setEditedText(e.target.value)}
             />
