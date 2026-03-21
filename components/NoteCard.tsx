@@ -96,15 +96,17 @@ export function NoteCard({ id, text, fieldType, createdAt }: NoteCardProps) {
 
   return (
     <div className="flex flex-row justify-between w-full gap-3 p-4 rounded-md shadow-sm bg-slate-800 lg:w-1/2 ">
-      <div className="flex flex-col flex-1 min-w-0 gap-4 p-2 overflow-hidden">
+      <div
+        className="flex flex-col flex-1 min-w-0 gap-4 p-2 overflow-hidden"
+        onClick={() => setExpanded(!expanded)}
+      >
         {!isEditing ? (
           <div
-            className={`overflow-hidden transition-[max-heigth] duration-300 text-gray-50 cursor-pointer`}
+            className={`wrap-break-word overflow-hidden transition-[max-heigth] duration-300 text-gray-50 cursor-pointer`}
             style={{
-              maxHeight: expanded ? "none" : "1.5rem",
+              maxHeight: expanded ? "1000px" : "1.5rem",
               whiteSpace: "pre-wrap",
             }}
-            onClick={() => setExpanded(!expanded)}
           >
             <span>{text}</span>
           </div>

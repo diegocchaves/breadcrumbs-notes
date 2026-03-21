@@ -30,32 +30,37 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="p-8 max-w-sm mx-auto space-y-4">
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="border p-2 w-full"
-      />
-
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="border p-2 w-full"
-      />
-
-      {error && <p className="text-red-500 text-sm">{error}</p>}
-
-      <button
-        onClick={login}
-        disabled={loading || !email || !password}
-        className="bg-black text-white px-4 py-2 w-full disabled:opacity-50"
+    <div className="flex items-center justify-center p-8 py-40 mx-auto">
+      <form
+        className="flex flex-col items-center justify-center w-full max-w-sm gap-5 p-10 bg-gray-900 rounded-lg"
+        action=""
       >
-        {loading ? "Logging in..." : "Login"}
-      </button>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full p-2 border"
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full p-2 border"
+        />
+
+        {error && <p className="text-sm text-red-500">{error}</p>}
+
+        <button
+          onClick={login}
+          disabled={loading || !email || !password}
+          className="w-full px-4 py-2 text-white bg-blue-500 "
+        >
+          {loading ? "Logging in..." : "Login"}
+        </button>
+      </form>
     </div>
   );
 }
