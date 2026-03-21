@@ -144,7 +144,7 @@ export function NoteCard({ id, text, fieldType, createdAt }: NoteCardProps) {
             <BsStars />
             <span>Type: {fieldType}</span>
           </div>
-          <div className="flex flex-row items-center gap-1.5 text-green-300">
+          <div className="flex flex-row items-center gap-1.5 text-gray-300">
             <FaRegCalendarAlt />
             <span> Created at: {new Date(createdAt).toLocaleString()}</span>
           </div>
