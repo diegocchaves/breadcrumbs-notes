@@ -1,5 +1,5 @@
 "use client";
-
+import { MdOutlineSettings } from "react-icons/md";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { useState, useEffect, useRef } from "react";
@@ -40,7 +40,7 @@ export default function Navbar() {
       <Link href="/" className="font-semibold">
         <img
           src="/bc-logo.svg"
-          className="w-6 h-6 lg:h-12 lg:w-12"
+          className="w-10 h-10 lg:h-12 lg:w-12"
           alt="Breadcrumbs logo"
         />
       </Link>
@@ -56,17 +56,39 @@ export default function Navbar() {
 
         {status === "authenticated" && session.user && (
           <>
-            <span className="text-sm text-gray-600 ">
+            <div className="flex flex-row items-center justify-center gap-1 mx-6 text-xs lg:text-sm lg:mx-12">
               {" "}
-              Welcome, {session.user.email?.split("@")[0] ?? "User"}
-            </span>
-            <div onClick={toggleMenu} ref={buttonRef}></div>
-            {/* <button
-              onClick={() => signOut({ callbackUrl: "/login" })}
-              className="text-xs text-red-600"
+              <span className="text-gray-200 "> Welcome, </span>
+              <span className="text-blue-500 ">
+                {" "}
+                {session.user.email?.split("@")[0] ?? "User"}
+              </span>
+            </div>
+
+            <div
+              className="relative rounded-md cursor-pointer "
+              onClick={toggleMenu}
+              ref={buttonRef}
             >
-              Logout
-            </button> */}
+              {!isOpen ? (
+                <MdOutlineSettings className="text-slate-300 hover:text-slate-500" />
+              ) : (
+                <MdOutlineSettings size={10} />
+              )}{" "}
+              {isOpen && (
+                <div
+                  ref={menuRef}
+                  className="absolute right-0 z-10 flex flex-col items-center justify-center w-20 h-20 mt-2 rounded-md shadow-lg bg-slate-700 "
+                >
+                  <button
+                    onClick={() => signOut({ callbackUrl: "/login" })}
+                    className="p-1.5 text-xs text-red-600 bg-gray-500 rounded-lg"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           </>
         )}
       </div>
