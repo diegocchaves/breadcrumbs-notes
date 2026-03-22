@@ -57,10 +57,14 @@ export default function LoginPage() {
           />
           {/* set up toggle interaction */}
           <button
-            className="absolute cursor-pointer left-[840] text-gray-400"
+            className="absolute cursor-pointer left-[840] text-gray-300"
             onClick={togglePasswordVisibility}
           >
-            {passwordShown ? <FaRegEyeSlash /> : <FaRegEye />}
+            {passwordShown ? (
+              <FaRegEyeSlash className="hover:text-gray-500" />
+            ) : (
+              <FaRegEye className="hover:text-gray-500" />
+            )}
           </button>
         </div>
 
