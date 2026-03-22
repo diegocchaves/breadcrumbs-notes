@@ -111,7 +111,7 @@ export function NoteCard({ id, text, fieldType, createdAt }: NoteCardProps) {
       >
         {!isEditing ? (
           <div
-            className={`wrap-break-word overflow-hidden transition-[max-heigth] duration-300 text-gray-50 cursor-pointer`}
+            className={`wrap-break-word overflow-hidden transition-[max-heigth] duration-300 text-gray-200 cursor-pointer`}
             style={{
               maxHeight: expanded ? "1000px" : "1.5rem",
               whiteSpace: "pre-wrap",
@@ -153,7 +153,7 @@ export function NoteCard({ id, text, fieldType, createdAt }: NoteCardProps) {
             <BsStars />
             <span>Type: {fieldType}</span>
           </div>
-          <div className="flex flex-row items-center gap-1.5 text-gray-300">
+          <div className="flex flex-row items-center gap-1.5 text-gray-500">
             <FaRegCalendarAlt />
             <span> Created at: {new Date(createdAt).toLocaleString()}</span>
           </div>

@@ -40,7 +40,7 @@ export default function Navbar() {
       <Link href="/" className="font-semibold">
         <img
           src="/bc-logo.svg"
-          className="w-10 h-10 lg:h-12 lg:w-12"
+          className="w-10 h-10 lg:h-14 lg:w-14"
           alt="Breadcrumbs logo"
         />
       </Link>
@@ -71,9 +71,9 @@ export default function Navbar() {
               ref={buttonRef}
             >
               {!isOpen ? (
-                <MdOutlineSettings className="text-slate-300 hover:text-slate-500" />
+                <MdOutlineSettings className="w-5 h-5 text-slate-300 hover:text-slate-500" />
               ) : (
-                <MdOutlineSettings size={10} />
+                <MdOutlineSettings size={10} className="text-gray-500" />
               )}{" "}
               {isOpen && (
                 <div
