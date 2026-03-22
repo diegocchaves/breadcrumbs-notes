@@ -4,6 +4,7 @@ import { signIn } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
+import Link from "next/link";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -37,46 +38,65 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex items-center justify-center p-8 py-40 mx-auto">
-      <div className="flex flex-col items-center justify-center w-full max-w-sm gap-5 p-10 bg-gray-900 rounded-lg">
-        <input
-          type="email"
-          placeholder="sample@email.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-2 text-sm border rounded-md"
-        />
-
-        <div className="flex flex-row items-center justify-center w-full">
-          <input
-            type={passwordShown ? "text" : "password"}
-            placeholder="Enter your password here"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-2 text-sm border rounded-md"
+    <div className="flex items-center justify-center w-full h-full py-40">
+      <div className="flex flex-row items-center justify-center w-full h-full">
+        <div className="flex items-center justify-center h-[500] bg-cyan-950 rounded-tl-2xl rounded-bl-2xl">
+          <img
+            src="/bc-logo.svg"
+            className="w-10 h-10 lg:h-70 lg:w-70"
+            alt="Breadcrumbs logo"
           />
-          {/* set up toggle interaction */}
-          <button
-            className="absolute cursor-pointer left-[840] text-gray-300"
-            onClick={togglePasswordVisibility}
-          >
-            {passwordShown ? (
-              <FaRegEyeSlash className="hover:text-gray-500" />
-            ) : (
-              <FaRegEye className="hover:text-gray-500" />
-            )}
-          </button>
         </div>
+        <div className="flex flex-col items-center justify-center w-full h-[500] max-w-sm gap-6 p-6 bg-gray-900 rounded-tr-2xl rounded-br-2xl ">
+          <div className="flex flex-col items-start w-full gap-4 ">
+            <h1 className="text-4xl font-bold ">Login</h1>
+            <h2>Login to your existing account</h2>
+          </div>
+          <div className="flex flex-col items-center justify-center w-full gap-4">
+            <input
+              type="email"
+              placeholder="sample@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full p-2 text-sm border rounded-md"
+            />
 
-        {error && <p className="text-sm text-red-500">{error}</p>}
+            <div className="flex flex-row items-center justify-center w-full">
+              <input
+                type={passwordShown ? "text" : "password"}
+                placeholder="Enter your password here"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full p-2 text-sm border rounded-md"
+              />
+              {/* set up toggle interaction */}
+              <button
+                className="absolute cursor-pointer left-[990] text-gray-300"
+                onClick={togglePasswordVisibility}
+              >
+                {passwordShown ? (
+                  <FaRegEyeSlash className="hover:text-gray-500" />
+                ) : (
+                  <FaRegEye className="hover:text-gray-500" />
+                )}
+              </button>
+            </div>
+          </div>
 
-        <button
-          onClick={login}
-          disabled={loading || !email || !password}
-          className="w-full px-4 py-2 text-white bg-blue-500 rounded "
-        >
-          {loading ? "Logging in..." : "Login"}
-        </button>
+          {error && <p className="text-sm text-red-500">{error}</p>}
+
+          <button
+            onClick={login}
+            disabled={loading || !email || !password}
+            className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded"
+          >
+            {loading ? "Logging in..." : "Login"}
+          </button>
+
+          <Link href="" className="text-sm text-blue-500 font-extralight">
+            Forgot Password?
+          </Link>
+        </div>
       </div>
     </div>
   );
