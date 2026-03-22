@@ -93,9 +93,15 @@ export default function LoginPage() {
             {loading ? "Logging in..." : "Login"}
           </button>
 
-          <Link href="" className="text-sm text-blue-500 font-extralight">
+          <Link href="" className="text-sm text-cyan-600 font-extralight">
             Forgot Password?
           </Link>
+          <div className="flex flex-row gap-2.5 text-sm font-sans">
+            <span>Don't have an account?</span>
+            <Link className="text-cyan-600" href="/signup">
+              Sign Up
+            </Link>
+          </div>
         </div>
       </div>
     </div>
