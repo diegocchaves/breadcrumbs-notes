@@ -14,12 +14,20 @@ model User {
   notes FieldNote[]
 }
 
+enum FieldType {
+  Insight
+  Encounter
+  Mood
+  Energy
+  Thoughts
+  Other
+}
+
 model FieldNote {
   id        String   @id @default(cuid())
   userId    String
-  user      User   @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
   text      String
-  fieldType String
+  fieldType FieldType
   createdAt DateTime @default(now())
-
 }

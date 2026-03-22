@@ -1,19 +1,26 @@
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { FaRegCalendarAlt } from "react-icons/fa";
-import { WiStars } from "react-icons/wi";
 import { BsStars } from "react-icons/bs";
 import { useState, useEffect, useRef } from "react";
 import { useToast } from "@/app/providers/toast-provider";
-import { useRouter } from "next/navigation";
 import { mutate } from "swr";
-import { Economica } from "next/font/google";
+import { FieldType } from "@prisma/client";
 
 export interface NoteCardProps {
   id: string;
   text: string;
-  fieldType: string;
+  fieldType: FieldType;
   createdAt: string;
 }
+
+const fieldTypeColors: Record<FieldType, string> = {
+  Insight: "text-blue-500",
+  Encounter: "text-purple-500",
+  Mood: "text-pink-500",
+  Energy: "text-yellow-400",
+  Thoughts: "text-green-500",
+  Other: "text-orange-500",
+};
 
 export function NoteCard({ id, text, fieldType, createdAt }: NoteCardProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -94,6 +101,8 @@ export function NoteCard({ id, text, fieldType, createdAt }: NoteCardProps) {
     mutate("/api/notes");
   };
 
+  const color = fieldTypeColors[fieldType];
+
   return (
     <div className="flex flex-row justify-between w-full gap-3 p-4 rounded-md shadow-sm bg-slate-800 lg:w-1/2 ">
       <div
@@ -140,7 +149,7 @@ export function NoteCard({ id, text, fieldType, createdAt }: NoteCardProps) {
           </form>
         )}
         <div className="flex flex-col lg:text-[11px] text-[10px] gap-1 ">
-          <div className="flex flex-row items-center gap-1.5 text-blue-400">
+          <div className={`flex flex-row items-center gap-1.5 ${color} `}>
             <BsStars />
             <span>Type: {fieldType}</span>
           </div>
