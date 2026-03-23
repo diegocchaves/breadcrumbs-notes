@@ -48,8 +48,8 @@ export default function LoginPage() {
           />
         </div>
         <div className="flex flex-col items-center justify-center w-full h-[500] max-w-sm gap-6 p-6 bg-gray-900 rounded-tr-2xl rounded-br-2xl ">
-          <div className="flex flex-col items-start w-full gap-4 ">
-            <h1 className="text-4xl font-bold ">Login</h1>
+          <div className="flex flex-col items-center gap-4 w-ull ">
+            <h1 className="pb-2 text-4xl font-bold ">BreadCrumbz</h1>
             <h2>Login to your existing account</h2>
           </div>
           <div className="flex flex-col items-center justify-center w-full gap-4">
