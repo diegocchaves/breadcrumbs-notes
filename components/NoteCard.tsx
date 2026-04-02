@@ -161,7 +161,7 @@ export function NoteCard({ id, text, fieldType, createdAt }: NoteCardProps) {
       </div>
 
       <div
-        className="relative rounded-md cursor-pointer "
+        className="rounded-md cursor-pointer "
         ref={buttonRef}
         onClick={toggleMenu}
       >
