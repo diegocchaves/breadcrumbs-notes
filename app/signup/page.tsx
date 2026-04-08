@@ -39,7 +39,7 @@ export default function SignUpPage() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-[url('/bc-logo-1.svg')] bg-cover bg-center bg-no-repeat h-screen w-[900] flex justify-center items-center ">
-        <div className="flex flex-col justify-center items-center w-96 h-[500] gap-6 p-6 border rounded-lg shadow-2xl w-ull bg-white/30 backdrop-blur-xl">
+        <div className="flex flex-col justify-center items-center w-96 h-[500] gap-6 p-6 border rounded-lg shadow-2xl  bg-white/30 backdrop-blur-xl">
           <div className="flex flex-row items-center justify-center gap-1">
             <img
               src="/bc-logo-1.svg"

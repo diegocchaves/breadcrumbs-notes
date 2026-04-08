@@ -177,7 +177,7 @@ export function NoteCard({ id, text, fieldType, createdAt }: NoteCardProps) {
         {isOpen && (
           <div
             ref={menuRef}
-            className="absolute right-0 z-10 rounded-md shadow-lg bg-slate-700"
+            className="absolute z-10 rounded-md shadow-lg right-96 bg-white/10 backdrop-blur-md"
           >
             <button
               onClick={() => setIsEditing(true)}
