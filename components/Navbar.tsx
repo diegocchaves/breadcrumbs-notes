@@ -3,6 +3,7 @@ import { MdOutlineSettings } from "react-icons/md";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { useState, useEffect, useRef } from "react";
+import ExportButtons from "./ExportButtons";
 
 export default function Navbar() {
   const { data: session, status } = useSession();
@@ -47,14 +48,7 @@ export default function Navbar() {
                 alt="Breadcrumbs logo"
               />
             </Link>
-            <button
-              onClick={() => {
-                window.open("/api/export", "_blank");
-              }}
-              className="px-4 py-2 text-white bg-blue-500 rounded-md"
-            >
-              Export PDF
-            </button>
+            <ExportButtons />
             <div className="flex items-center gap-4">
               <div className="flex flex-row items-center justify-center gap-1 mx-6 text-xs lg:text-sm lg:mx-12">
                 <span className="text-gray-200 "> Welcome, </span>
