@@ -12,7 +12,7 @@ export default function ExportButtons() {
     <div className="flex gap-2">
       <button
         onClick={() => handleExport("pdf")}
-        className="flex items-center gap-2 px-4 py-2 text-white transition bg-red-600 rounded-md hover:bg-red-700"
+        className="flex items-center gap-2 px-4 py-2 text-white transition bg-green-600 rounded-md hover:bg-green-700"
       >
         <FileText className="w-4 h-4" />
         Export PDF
