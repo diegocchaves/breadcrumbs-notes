@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+
 import {
   Document,
   Page,
@@ -52,17 +53,29 @@ const styles = StyleSheet.create({
 
 export async function GET(request: Request) {
   const session = await getServerSession(authOptions);
+  const { searchParams } = new URL(request.url);
+  const format = searchParams.get("format") || "pdf";
+  const fromDate = searchParams.get("from");
+  const toDate = searchParams.get("to");
+  const groupBy = searchParams.get("groupBy") || "none";
 
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  // Get format from query parameter
-  const { searchParams } = new URL(request.url);
-  const format = searchParams.get("format") || "pdf"; // Default to PDF
+  const dateFilter: any = {};
+  if (fromDate) {
+    dateFilter.gte = new Date(fromDate);
+  }
+  if (toDate) {
+    dateFilter.lte = new Date(toDate + "T23:59:59");
+  }
 
   const notes = await prisma.fieldNote.findMany({
-    where: { userId: session.user.id },
+    where: {
+      userId: session.user.id,
+      ...(Object.keys(dateFilter).length > 0 && { createdAt: dateFilter }),
+    },
     orderBy: { createdAt: "desc" },
   });
 
